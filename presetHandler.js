@@ -1,8 +1,35 @@
-// Use this presets array inside your presetHandler
 const presets = require('./presets');
 
-// Complete this function:
-const presetHandler = () => {};
+const getPreset = (index) => {
+  return presets[index] || null;
+};
 
-// Leave this line so that your presetHandler function can be used elsewhere:
+const createOrUpdatePreset = (index, array) => {
+  if (!presets[index]) {
+    return;
+  }
+  presets[index] = array;
+  return presets[index];
+};
+
+const presetHandler = (req_type, pArray, newPresetArray) => {
+  if (req_type === 'GET') {
+    let preset = getPreset(pArray);
+    if (preset) {
+      return [200, preset];
+    } else {
+      return [404];
+    }
+  } else if (req_type === 'PUT') {
+    const newPreset = createOrUpdatePreset(pArray, newPresetArray);
+    if (newPreset) {
+      return [200, newPreset];
+    } else {
+      return [404];
+    }
+  } else {
+    return[400];
+  }
+};
+
 module.exports = presetHandler;

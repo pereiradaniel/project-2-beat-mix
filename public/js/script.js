@@ -1,18 +1,47 @@
 // Drum Arrays
-const sixteen = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
-let kicks = sixteen;
-let snares = sixteen;
-let hiHats = sixteen;
-let rideCymbals = sixteen;
+const createEmptyDrumArray = () => new Array(16).fill(false);
 
-const toggleDrum = (arrayName, indexNum) => {
-  arrayName[indexNum] = !arrayName[indexNum];
+let kicks = createEmptyDrumArray();
+let snares = createEmptyDrumArray();
+let hiHats = createEmptyDrumArray();
+let rideCymbals = createEmptyDrumArray();
+
+const getDrumArrayByName = (name) => {
+  switch (name) {
+    case 'kicks':
+    return kicks;
+    case 'snares':
+    return snares;
+    case 'hiHats':
+    return hiHats;
+    case 'rideCymbals':
+    return rideCymbals;
+    default:
+    return;
+  }
 };
 
-const clear = arrayName => arrayName = sixteen;
+const toggleDrum = (drumArrayName, index) => {
+  const drums = getDrumArrayByName(drumArrayName);
+  if (!drums || index > 15 || index < 0) {
+    return;
+  }
+  drums[index] = !drums[index];
+};
 
-const invert = (arrayName) => {
-  return arrayName = arrayName.map(function(index) {
-    return !index;
-  });
+const clear = (drumArrayName) => {
+  const drums = getDrumArrayByName(drumArrayName);
+  if (drums) {
+    drums.fill(false);
+  }
+};
+
+const invert = (drumArrayName) => {
+  const drums = getDrumArrayByName(drumArrayName);
+  if (!drums) {
+    return;
+  }
+  for (let i = 0; i < drums.length; i++) {
+    drums[i] = !drums[i];
+  }
 };
